@@ -11,44 +11,35 @@ public class DocumentVerificationService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public boolean verifyIdentity(Long customerId) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-        if (customer != null) {
-            customer.setIdentityVerified(true);
-            customerRepository.save(customer);
-            return true;
-        }
-        return false;
+    public Customer verifyIdentity(Long customerId) {
+        Customer customer = customerRepository.findByIdentityVerifiedIsTrueAndId(customerId);
+        // Perform identity verification logic here
+        return customer;
     }
 
-    public boolean verifyAddress(Long customerId) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-        if (customer != null) {
-            customer.setAddressVerified(true);
-            customerRepository.save(customer);
-            return true;
-        }
-        return false;
+    public Customer verifyAddress(Long customerId) {
+        Customer customer = customerRepository.findByAddressVerifiedIsTrueAndId(customerId);
+        // Perform address verification logic here (e.g., send OTP to customer's mobile number)
+        return customer;
     }
 
-    public String notifyVerificationResult(Long customerId) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-        if (customer != null) {
-            boolean isIdentityVerified = customer.isIdentityVerified();
-            boolean isAddressVerified = customer.isAddressVerified();
-
-            if (isIdentityVerified && isAddressVerified) {
-                return "Document verification is complete. Customer is eligible for banking services.";
-            } else if (!isIdentityVerified && isAddressVerified) {
-                return "Identity document verification is pending. Customer is not eligible for banking services.";
-            } else if (isIdentityVerified && !isAddressVerified) {
-                return "Address document verification is pending. Customer is not eligible for banking services.";
-            } else {
-                return "Both identity and address document verifications are pending. Customer is not eligible for banking services.";
-            }
+    public void notifyVerificationResult(boolean isIdentityVerified, boolean isAddressVerified) {
+        String eligibilityMessage;
+        if (isIdentityVerified && isAddressVerified) {
+            eligibilityMessage = "Congratulations! You are now eligible for banking services.";
+        } else if (isIdentityVerified) {
+            eligibilityMessage = "Your identity is verified, but address verification is pending.";
+        } else if (isAddressVerified) {
+            eligibilityMessage = "Your address is verified, but identity verification is pending.";
+        } else {
+            eligibilityMessage = "Both identity and address verification are pending.";
         }
-        return "Customer not found.";
+        System.out.println(eligibilityMessage);
     }
+
+    // Other methods for document verification and customer management can be added here
     
-    // Other required methods and business logic can be added here
+    // Unit testing can be conducted to verify the accuracy of the eligibility message when both identity and address document verification results are considered
+
+    // API documentation and usage guidelines can be added as comments here or in a separate documentation file
 }

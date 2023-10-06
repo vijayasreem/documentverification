@@ -1,28 +1,23 @@
-
 package com.DocumentVerification.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "customer")
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String name;
-    
-    private String email;
-    
-    private boolean verified;
-    
-    private boolean loanEligible;
 
-    // getters and setters
-    
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "identity_verified")
+    private boolean identityVerified;
+
+    @Column(name = "address_verified")
+    private boolean addressVerified;
+
     public Long getId() {
         return id;
     }
@@ -39,28 +34,19 @@ public class Customer {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public boolean isIdentityVerified() {
+        return identityVerified;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIdentityVerified(boolean identityVerified) {
+        this.identityVerified = identityVerified;
     }
 
-    public boolean isVerified() {
-        return verified;
+    public boolean isAddressVerified() {
+        return addressVerified;
     }
 
-    public void setVerified(boolean verified) {
-        this.verified = verified;
+    public void setAddressVerified(boolean addressVerified) {
+        this.addressVerified = addressVerified;
     }
-
-    public boolean isLoanEligible() {
-        return loanEligible;
-    }
-
-    public void setLoanEligible(boolean loanEligible) {
-        this.loanEligible = loanEligible;
-    }
-    
 }
