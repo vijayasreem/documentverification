@@ -9,13 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Customer c WHERE c.isIdentityVerified = true")
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM com.DocumentVerification.model.Customer c WHERE c.isIdentityVerified = true")
     boolean existsCustomerWithIdentityVerification();
 
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Customer c WHERE c.isAddressVerified = true")
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM com.DocumentVerification.model.Customer c WHERE c.isAddressVerified = true")
     boolean existsCustomerWithAddressVerification();
 
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Customer c WHERE c.isIdentityVerified = true AND c.isAddressVerified = true")
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM com.DocumentVerification.model.Customer c WHERE c.isIdentityVerified = true AND c.isAddressVerified = true")
     boolean existsCustomerWithCompleteVerification();
 
     // Other required methods and queries can be added here
