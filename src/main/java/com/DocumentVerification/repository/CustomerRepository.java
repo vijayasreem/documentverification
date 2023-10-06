@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    // Identity verification query
-    Customer findByIdentityVerifiedIsTrueAndId(Long id);
-
-    // Address verification query
-    Customer findByAddressVerifiedIsTrueAndId(Long id);
+    
+    // Custom queries for document verification
+    
+    Customer findByEmail(String email);
+    
+    // Add more custom queries as needed
+    
 }

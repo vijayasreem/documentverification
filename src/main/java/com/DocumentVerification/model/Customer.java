@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "customer")
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -12,41 +13,17 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "identity_verified")
-    private boolean identityVerified;
+    @Column(name = "email")
+    private String email;
 
-    @Column(name = "address_verified")
-    private boolean addressVerified;
+    // Add more attributes as needed
 
-    public Long getId() {
-        return id;
-    }
+    // Add getters and setters
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Add constructors
 
-    public String getName() {
-        return name;
-    }
+    // Add toString method
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    // Add any additional methods as needed
 
-    public boolean isIdentityVerified() {
-        return identityVerified;
-    }
-
-    public void setIdentityVerified(boolean identityVerified) {
-        this.identityVerified = identityVerified;
-    }
-
-    public boolean isAddressVerified() {
-        return addressVerified;
-    }
-
-    public void setAddressVerified(boolean addressVerified) {
-        this.addressVerified = addressVerified;
-    }
 }

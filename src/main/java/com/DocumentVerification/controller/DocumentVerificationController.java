@@ -1,35 +1,44 @@
 package com.DocumentVerification.controller;
 
 import com.DocumentVerification.model.Customer;
-import com.DocumentVerification.repository.CustomerRepository;
 import com.DocumentVerification.service.DocumentVerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/document-verification")
 public class DocumentVerificationController {
 
     @Autowired
     private DocumentVerificationService documentVerificationService;
 
-    @PostMapping("/verifyIdentity/{customerId}")
-    public Customer verifyIdentity(@PathVariable Long customerId) {
-        return documentVerificationService.verifyIdentity(customerId);
+    @PostMapping("/verify-identity-document")
+    public ResponseEntity<String> verifyIdentityDocument(@RequestBody Customer customer) {
+        boolean isVerified = documentVerificationService.verifyIdentityDocument(customer);
+        if (isVerified) {
+            return new ResponseEntity<>("Identity document verified successfully.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Failed to verify identity document.", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/verifyAddress/{customerId}")
-    public Customer verifyAddress(@PathVariable Long customerId) {
-        return documentVerificationService.verifyAddress(customerId);
+    @PostMapping("/send-otp-for-address-verification")
+    public ResponseEntity<String> sendOTPForAddressVerification(@RequestBody Customer customer) {
+        boolean isOTPSent = documentVerificationService.sendOTPForAddressVerification(customer);
+        if (isOTPSent) {
+            return new ResponseEntity<>("OTP sent successfully for address verification.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Failed to send OTP for address verification.", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/notifyVerificationResult/{isIdentityVerified}/{isAddressVerified}")
-    public void notifyVerificationResult(@PathVariable boolean isIdentityVerified, @PathVariable boolean isAddressVerified) {
-        documentVerificationService.notifyVerificationResult(isIdentityVerified, isAddressVerified);
+    @GetMapping("/notify-verification-result")
+    public void notifyVerificationResult(@RequestBody Customer customer) {
+        documentVerificationService.notifyVerificationResult(customer);
     }
+    
+    // Add more API endpoints as needed
 
-    // Other endpoints for document verification and customer management can be added here
-
-    // API documentation and usage guidelines can be added as comments here or in a separate documentation file
 }

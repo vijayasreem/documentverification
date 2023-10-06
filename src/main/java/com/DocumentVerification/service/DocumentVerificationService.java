@@ -1,3 +1,4 @@
+
 package com.DocumentVerification.service;
 
 import com.DocumentVerification.model.Customer;
@@ -11,35 +12,26 @@ public class DocumentVerificationService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public Customer verifyIdentity(Long customerId) {
-        Customer customer = customerRepository.findByIdentityVerifiedIsTrueAndId(customerId);
-        // Perform identity verification logic here
-        return customer;
+    public boolean verifyIdentityDocument(Customer customer) {
+        // Implement logic to verify identity document
+        // Return true if the document is verified, false otherwise
     }
 
-    public Customer verifyAddress(Long customerId) {
-        Customer customer = customerRepository.findByAddressVerifiedIsTrueAndId(customerId);
-        // Perform address verification logic here (e.g., send OTP to customer's mobile number)
-        return customer;
+    public boolean sendOTPForAddressVerification(Customer customer) {
+        // Implement logic to send OTP for address verification
+        // Return true if the OTP is sent successfully, false otherwise
     }
 
-    public void notifyVerificationResult(boolean isIdentityVerified, boolean isAddressVerified) {
-        String eligibilityMessage;
-        if (isIdentityVerified && isAddressVerified) {
-            eligibilityMessage = "Congratulations! You are now eligible for banking services.";
-        } else if (isIdentityVerified) {
-            eligibilityMessage = "Your identity is verified, but address verification is pending.";
-        } else if (isAddressVerified) {
-            eligibilityMessage = "Your address is verified, but identity verification is pending.";
+    public void notifyVerificationResult(Customer customer) {
+        if (customer.isIdentityDocumentVerified() && customer.isAddressDocumentVerified()) {
+            System.out.println("Congratulations! Your documents are verified.");
+            System.out.println("You are eligible for banking services.");
         } else {
-            eligibilityMessage = "Both identity and address verification are pending.";
+            System.out.println("Sorry, your documents could not be verified.");
+            System.out.println("Please contact customer support for further assistance.");
         }
-        System.out.println(eligibilityMessage);
     }
-
-    // Other methods for document verification and customer management can be added here
     
-    // Unit testing can be conducted to verify the accuracy of the eligibility message when both identity and address document verification results are considered
+    // Add more business methods as needed
 
-    // API documentation and usage guidelines can be added as comments here or in a separate documentation file
 }
