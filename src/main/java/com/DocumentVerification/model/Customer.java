@@ -1,4 +1,4 @@
-
+//Spring Boot Entity/Model class
 package com.DocumentVerification.model;
 
 import javax.persistence.Entity;
@@ -8,35 +8,49 @@ import javax.persistence.Id;
 
 @Entity
 public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String name;
-    private int creditScore;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getCreditScore() {
-        return creditScore;
-    }
-
-    public void setCreditScore(int creditScore) {
-        this.creditScore = creditScore;
-    }
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	private boolean documentVerification;
+	private boolean verificationTimeliness;
+	private boolean eligibility;
+	
+	public Customer() {
+		
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public boolean isDocumentVerification() {
+		return documentVerification;
+	}
+	
+	public void setDocumentVerification(boolean documentVerification) {
+		this.documentVerification = documentVerification;
+	}
+	
+	public boolean isVerificationTimeliness() {
+		return verificationTimeliness;
+	}
+	
+	public void setVerificationTimeliness(boolean verificationTimeliness) {
+		this.verificationTimeliness = verificationTimeliness;
+	}
+	
+	public boolean isEligibility() {
+		return eligibility;
+	}
+	
+	public void setEligibility(boolean eligibility) {
+		this.eligibility = eligibility;
+	}
+	
 }

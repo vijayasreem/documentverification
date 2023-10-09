@@ -1,25 +1,19 @@
-
 package com.DocumentVerification.repository;
 
-import com.DocumentVerification.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import com.DocumentVerification.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+	//method to verify customer documents accurately and quickly
+	public Customer findByDocumentVerification(boolean documentVerification);
 
-    // Method to find a customer by their ID
-    Customer findById(long id);
+	//method to notify customer of verification results in a timely manner
+	public Customer findByVerificationTimeliness(boolean verificationTimeliness);
 
-    // Method to find a customer by their name
-    Customer findByName(String name);
+	//method to assess customer eligibility for a loan
+	public Customer findByEligibility(boolean eligibility);
 
-    // Method to find customers with a credit score above a given threshold
-    @Query("SELECT c FROM Customer c WHERE c.creditScore > ?1")
-    List<Customer> findCustomersByCreditScoreGreaterThan(int threshold);
-
-    // Method to find customers with a credit score below a given threshold
-    @Query("SELECT c FROM Customer c WHERE c.creditScore < ?1")
-    List<Customer> findCustomersByCreditScoreLessThan(int threshold);
 }

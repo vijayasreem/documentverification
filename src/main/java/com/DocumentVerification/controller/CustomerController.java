@@ -1,40 +1,41 @@
 package com.DocumentVerification.controller;
 
-import com.DocumentVerification.model.Customer;
-import com.DocumentVerification.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.DocumentVerification.model.Customer;
+import com.DocumentVerification.service.CustomerService;
+
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/customers")
 public class CustomerController {
 
-    private final CustomerService customerService;
+	@Autowired
+	private CustomerService customerService;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+	@PostMapping("/verifyDocument")
+	public ResponseEntity<List<Customer>> verifyDocument(@RequestBody Customer customer) {
+		List<Customer> customers = customerService.verifyCustomersByDocumentVerification(customer.isDocumentVerification());
+		return new ResponseEntity<>(customers, HttpStatus.OK);
+	}
 
-    @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable long id) {
-        return customerService.findById(id);
-    }
+	@PostMapping("/notifyVerification")
+	public ResponseEntity<List<Customer>> notifyVerification(@RequestBody Customer customer) {
+		List<Customer> customers = customerService.notifyCustomersByVerificationTimeliness(customer.isVerificationTimeliness());
+		return new ResponseEntity<>(customers, HttpStatus.OK);
+	}
 
-    @GetMapping("/name/{name}")
-    public Customer getCustomerByName(@PathVariable String name) {
-        return customerService.findByName(name);
-    }
+	@PostMapping("/assessEligibility")
+	public ResponseEntity<List<Customer>> assessEligibility(@RequestBody Customer customer) {
+		List<Customer> customers = customerService.assessCustomersByEligibility(customer.isEligibility());
+		return new ResponseEntity<>(customers, HttpStatus.OK);
+	}
 
-    @GetMapping("/credit-score-greater-than/{threshold}")
-    public List<Customer> getCustomersByCreditScoreGreaterThan(@PathVariable int threshold) {
-        return customerService.findCustomersByCreditScoreGreaterThan(threshold);
-    }
-
-    @GetMapping("/credit-score-less-than/{threshold}")
-    public List<Customer> getCustomersByCreditScoreLessThan(@PathVariable int threshold) {
-        return customerService.findCustomersByCreditScoreLessThan(threshold);
-    }
 }

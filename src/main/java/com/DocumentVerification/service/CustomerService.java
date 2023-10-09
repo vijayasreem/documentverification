@@ -1,35 +1,49 @@
 package com.DocumentVerification.service;
 
-import com.DocumentVerification.model.Customer;
-import com.DocumentVerification.repository.CustomerRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.DocumentVerification.model.Customer;
+import com.DocumentVerification.repository.CustomerRepository;
 
 @Service
 public class CustomerService {
 
-    private final CustomerRepository customerRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
-    @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+	//method to verify customer documents accurately and quickly
+	public List<Customer> verifyCustomersByDocumentVerification(boolean documentVerification) {
+		List<Customer> customers = new ArrayList<>();
+		Optional<List<Customer>> customerList = customerRepository.findByDocumentVerification(documentVerification);
+		if (customerList.isPresent()) {
+			customers = customerList.get();
+		}
+		return customers;
+	}
 
-    public Customer findById(long id) {
-        return customerRepository.findById(id);
-    }
+	//method to notify customer of verification results in a timely manner
+	public List<Customer> notifyCustomersByVerificationTimeliness(boolean verificationTimeliness) {
+		List<Customer> customers = new ArrayList<>();
+		Optional<List<Customer>> customerList = customerRepository.findByVerificationTimeliness(verificationTimeliness);
+		if (customerList.isPresent()) {
+			customers = customerList.get();
+		}
+		return customers;
+	}
 
-    public Customer findByName(String name) {
-        return customerRepository.findByName(name);
-    }
+	//method to assess customer eligibility for a loan
+	public List<Customer> assessCustomersByEligibility(boolean eligibility) {
+		List<Customer> customers = new ArrayList<>();
+		Optional<List<Customer>> customerList = customerRepository.findByEligibility(eligibility);
+		if (customerList.isPresent()) {
+			customers = customerList.get();
+		}
+		return customers;
+	}
 
-    public List<Customer> findCustomersByCreditScoreGreaterThan(int threshold) {
-        return customerRepository.findCustomersByCreditScoreGreaterThan(threshold);
-    }
-
-    public List<Customer> findCustomersByCreditScoreLessThan(int threshold) {
-        return customerRepository.findCustomersByCreditScoreLessThan(threshold);
-    }
 }
