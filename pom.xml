@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.DocumentVerification</groupId>
-	<artifactId>SAC-271</artifactId>
+	<artifactId>SAC-266</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>projects2</name>
