@@ -18,38 +18,23 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
-    }
-
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Long id) {
-        return customerService.getCustomerById(id);
+    public Customer getCustomerById(@PathVariable long id) {
+        return customerService.findById(id);
     }
 
-    @GetMapping("/verified")
-    public List<Customer> getVerifiedCustomers() {
-        return customerService.getVerifiedCustomers();
+    @GetMapping("/name/{name}")
+    public Customer getCustomerByName(@PathVariable String name) {
+        return customerService.findByName(name);
     }
 
-    @GetMapping("/unverified")
-    public List<Customer> getUnverifiedCustomers() {
-        return customerService.getUnverifiedCustomers();
+    @GetMapping("/credit-score-greater-than/{threshold}")
+    public List<Customer> getCustomersByCreditScoreGreaterThan(@PathVariable int threshold) {
+        return customerService.findCustomersByCreditScoreGreaterThan(threshold);
     }
 
-    @GetMapping("/loanEligible")
-    public List<Customer> getCustomersByLoanEligibility(@RequestParam boolean loanEligible) {
-        return customerService.getCustomersByLoanEligibility(loanEligible);
-    }
-
-    @PostMapping
-    public Customer saveCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id) {
-        customerService.deleteCustomer(id);
+    @GetMapping("/credit-score-less-than/{threshold}")
+    public List<Customer> getCustomersByCreditScoreLessThan(@PathVariable int threshold) {
+        return customerService.findCustomersByCreditScoreLessThan(threshold);
     }
 }

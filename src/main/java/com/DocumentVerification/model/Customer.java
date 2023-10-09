@@ -1,29 +1,42 @@
+
 package com.DocumentVerification.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-@Table(name = "customer")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "name")
+    
     private String name;
+    private int creditScore;
 
-    @Column(name = "email")
-    private String email;
+    public Long getId() {
+        return id;
+    }
 
-    // Add more attributes as needed
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
 
-    // Add getters and setters
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    // Add constructors
+    public int getCreditScore() {
+        return creditScore;
+    }
 
-    // Add toString method
-
-    // Add any additional methods as needed
-
+    public void setCreditScore(int creditScore) {
+        this.creditScore = creditScore;
+    }
 }

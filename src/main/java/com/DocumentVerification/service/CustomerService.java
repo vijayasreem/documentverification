@@ -17,31 +17,19 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public Customer findById(long id) {
+        return customerRepository.findById(id);
     }
 
-    public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+    public Customer findByName(String name) {
+        return customerRepository.findByName(name);
     }
 
-    public List<Customer> getVerifiedCustomers() {
-        return customerRepository.findVerifiedCustomers();
+    public List<Customer> findCustomersByCreditScoreGreaterThan(int threshold) {
+        return customerRepository.findCustomersByCreditScoreGreaterThan(threshold);
     }
 
-    public List<Customer> getUnverifiedCustomers() {
-        return customerRepository.findUnverifiedCustomers();
-    }
-
-    public List<Customer> getCustomersByLoanEligibility(boolean loanEligible) {
-        return customerRepository.findByLoanEligible(loanEligible);
-    }
-
-    public Customer saveCustomer(Customer customer) {
-        return customerRepository.save(customer);
-    }
-
-    public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
+    public List<Customer> findCustomersByCreditScoreLessThan(int threshold) {
+        return customerRepository.findCustomersByCreditScoreLessThan(threshold);
     }
 }
